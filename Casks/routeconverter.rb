@@ -16,9 +16,16 @@ cask "routeconverter" do
   end
 
   auto_updates false
-  quarantine false
-
   depends_on macos: :big_sur
 
   app "RouteConverter.app"
+
+  caveats do
+    <<~EOS
+      RouteConverter.app is signed but not notarized by Apple. On first
+      launch, Gatekeeper may block it — right-click the app and choose
+      Open, or run:
+        xattr -dr com.apple.quarantine "#{appdir}/RouteConverter.app"
+    EOS
+  end
 end
